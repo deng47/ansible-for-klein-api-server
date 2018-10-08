@@ -1,8 +1,8 @@
-- name: Install Flask API Daemon
+- name: Install Klein API Daemon
   vars:
     domainname: ddns.net
     dir_path: "/opt"
-    pwd: "/root/ansible-for-flask-api-server"
+    pwd: "/root/ansible-for-klein-api-server"
   hosts: localhost
   tasks:
     - name: Install Python3 and Flask
@@ -10,15 +10,19 @@
       with_items:
         - python34
         - python34-pip
+        - python34-devel
+        - gcc
         - openssl
 
     - pip:
-        name: flask
+        name: twisted
         state: present
+        executable: pip3
 
     - pip:
-        name: pyopenssl
+        name: klein
         state: present
+        executable: pip3
 
     - name: Copy api.py
       copy:
@@ -49,20 +53,20 @@
         owner: root
         group: root
         mode: 0644
-        src: "{{ pwd }}/files/flask-api.service"
-        dest: /lib/systemd/system/flask-api.service
+        src: "{{ pwd }}/files/klein-api.service"
+        dest: /lib/systemd/system/klein-api.service
 
     - name: Copy rsyslog Config File
       copy:
         owner: root
         group: root
         mode: 0644
-        src: "{{ pwd }}/files/flask-api.conf"
-        dest: /etc/rsyslog.d/flask-api.conf
+        src: "{{ pwd }}/files/klein-api.conf"
+        dest: /etc/rsyslog.d/klein-api.conf
 
-    - name: Run flask-api
+    - name: Run klein-api
       service:
-        name: flask-api
+        name: klein-api
         state: started
 
     - name: Restart rsyslog
