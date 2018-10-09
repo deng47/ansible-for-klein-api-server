@@ -12,7 +12,11 @@
         - python34-pip
         - python34-devel
         - gcc
-        - openssl
+
+    - pip:
+        name: service_identity
+        state: present
+        executable: pip3
 
     - pip:
         name: twisted
