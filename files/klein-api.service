@@ -4,7 +4,10 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=PYTHONPATH=/opt/ twistd -n web --class=api.resource --https=443 -c server.crt -k server.key
+WorkingDirectory=/opt
+Environment=PYTHONPATH=/opt
+ExecStart=/bin/twistd -n web --class=api.resource --https=443 -c server.crt -k server.key
+#ExecStart='PYTHONPATH=/opt/ /bin/twistd -n web --class=api.resource --https=443 -c server.crt -k server.key'
 Restart=on-failure
 RemainAfterExit=yes
 

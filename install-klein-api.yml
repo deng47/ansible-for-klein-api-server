@@ -5,7 +5,7 @@
     pwd: "/root/ansible-for-klein-api-server"
   hosts: localhost
   tasks:
-    - name: Install Python3 and Flask
+    - name: Install Python3 and Klein
       yum: name={{ item }} state=installed
       with_items:
         - python34
